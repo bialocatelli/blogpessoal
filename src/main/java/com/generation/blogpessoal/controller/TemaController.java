@@ -28,7 +28,7 @@ public class TemaController {
 	@Autowired
 	private TemaRepository temaRepository;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Tema>> getAll () {
 		return ResponseEntity.ok(temaRepository.findAll());
 	}
@@ -45,12 +45,12 @@ public class TemaController {
 		return ResponseEntity.ok(temaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Tema> postTema (@Valid @RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(temaRepository.save(tema));
 	}
 	
-	@PutMapping 
+	@PutMapping("/atualizar")
 	public ResponseEntity<Tema> putTema (@Valid @RequestBody Tema tema) {
 		return temaRepository.findById(tema.getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(temaRepository.save(tema)))

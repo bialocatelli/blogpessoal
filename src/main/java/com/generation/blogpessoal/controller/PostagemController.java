@@ -28,7 +28,7 @@ public class PostagemController {
 	@Autowired
 	private PostagemRepository postagemRepository;
 
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Postagem>> getAll() {
 		return ResponseEntity.ok(postagemRepository.findAll());
 
@@ -49,12 +49,12 @@ public class PostagemController {
 		return ResponseEntity.ok(postagemRepository.findAllByTituloContainingIgnoreCase(titulo));
 	}
 
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Postagem> postPostagem(@Valid @RequestBody Postagem postagem) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
 	}
 
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Postagem> putPostagem(@Valid @RequestBody Postagem postagem) {
 		return postagemRepository.findById(postagem.getId())
 				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))
